@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ilyas Market Checkout</title>
+<style>
+  :root{
+    --gold:#f5c542; --gold2:#ffdd70; --dark:#0b0b0d; --panel:#141416;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    color: var(--gold);
+    background:
+      radial-gradient(1200px 600px at 50% -10%, #26221b 0%, #0a0a0a 55%, #000 100%),
+      #000;
+    display:flex; align-items:center; justify-content:center;
+    padding:20px;
+  }
+
+  .wrap{
+    width:100%; max-width:520px;
+    background: linear-gradient(160deg, #181716, #0f0f10);
+    border:2px solid rgba(245,197,66,0.45);
+    border-radius:18px; padding:22px 18px;
+    box-shadow: 0 0 30px rgba(245,197,66,0.35);
+    position:relative;
+  }
+  .wrap::after{
+    content:""; position:absolute; inset:-2px; border-radius:18px;
+    background: conic-gradient(from 0deg, rgba(245,197,66,.0), rgba(245,197,66,.3), rgba(245,197,66,.0));
+    filter:blur(12px); z-index:-1; animation: spin 4s linear infinite;
+  }
+  @keyframes spin{ to{ transform: rotate(360deg);} }
+
+  .title{
+    text-align:center; font-weight:900; letter-spacing:1.5px; margin-bottom:14px;
+    text-shadow:0 0 8px var(--gold), 0 0 20px #8b6b13;
+  }
+
+  .order-box{
+    border:1px solid rgba(245,197,66,0.35);
+    border-radius:12px; padding:12px 14px; margin-bottom:14px;
+    background: rgba(0,0,0,0.45);
+  }
+  .row{display:flex; justify-content:space-between; gap:10px; padding:6px 0; color:#f6e9c6}
+  .label{opacity:.9}
+  .val{font-weight:800; color:var(--gold2)}
+
+  label{display:block; font-weight:800; margin:10px 0 6px;}
+  input{
+    width:100%; padding:12px; border-radius:10px;
+    border:2px solid rgba(245,197,66,0.35);
+    background:#111; color:#fff; outline:none;
+  }
+  input:focus{ border-color:var(--gold2); box-shadow:0 0 10px rgba(245,197,66,.45); }
+
+  .btn{
+    margin-top:14px; width:100%;
+    padding:14px; border-radius:12px; border:none; cursor:pointer;
+    font-weight:900; letter-spacing:.2px; font-size:1.05rem;
+    background: linear-gradient(45deg, var(--gold), var(--gold2));
+    color:#111; box-shadow:0 0 18px rgba(245,197,66,.5);
+    transition: transform .15s, box-shadow .2s, opacity .2s;
+  }
+  .btn:hover:enabled{ transform: translateY(-2px); box-shadow:0 0 24px rgba(245,197,66,.65); }
+  .btn:disabled{ opacity:.5; cursor:not-allowed; box-shadow:none; }
+
+  .hint{font-size:.85rem; opacity:.9; text-align:center; margin-top:8px; color:#e7dbb6}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="title">🃏 Checkout — Ilyas Market</div>
+
+    <!-- Info pesanan -->
+    <div class="order-box">
+      <div class="row"><span class="label">Produk</span><span class="val" id="v-produk">-</span></div>
+      <div class="row"><span class="label">Harga</span><span class="val">Rp <span id="v-harga">-</span></span></div>
+      <div class="row"><span class="label">Game</span><span class="val" id="v-game">-</span></div>
+    </div>
+
+    <!-- Form user -->
+    <form id="form">
+      <label for="nama">Nama (wajib)</label>
+      <input id="nama" type="text" placeholder="Nama kamu" required>
+
+      <label for="idgame">ID Game (wajib)</label>
+      <input id="idgame" type="text" placeholder="ID akun game" required>
+
+      <button class="btn" id="btn" type="submit" disabled>🎰 Checkout via WhatsApp</button>
+      <div class="hint">Pastikan data benar. Setelah klik, kamu akan diarahkan ke WhatsApp admin.</div>
+    </form>
+  </div>
+
+<script>
+  // Ambil data dari URL
+  const p = new URLSearchParams(location.search);
+  let produk  = p.get('produk')  || 'Produk Tidak Dikenal';
+  const harga = p.get('harga')   || '0';
+  const gParam = p.get('game')   || 'unknown';
+
+  // mapping game supaya konsisten
+  const gameMap = {
+    ml: "Mobile Legends",
+    ff: "Free Fire",
+    hok: "Honor of Kings",
+    bs: "Blood Strike",
+    supersus: "Super Sus"
+  };
+  const game = gameMap[gParam.toLowerCase()] || gParam;
+
+  // jika membership/pass, ubah nama ke format strip
+  if (produk.toLowerCase().includes("membership") || produk.toLowerCase().includes("pass")) {
+    produk = produk.trim().toLowerCase().replace(/\s+/g, "-");
+  }
+
+  document.getElementById('v-produk').textContent  = produk;
+  document.getElementById('v-harga').textContent   = harga.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  document.getElementById('v-game').textContent    = game;
+
+  // kirim ke wa
+  const ADMIN_WA = "6283877492236"; // ganti nomor admin
+  const namaEl = document.getElementById('nama');
+  const idEl   = document.getElementById('idgame');
+  const btn    = document.getElementById('btn');
+
+  function validate(){ btn.disabled = !(namaEl.value.trim() && idEl.value.trim()); }
+  namaEl.addEventListener('input', validate);
+  idEl.addEventListener('input', validate);
+
+  document.getElementById('form').addEventListener('submit', function(e){
+    e.preventDefault();
+    const msg =
+      `꧁乂bg Ilyas, Gw Mau Topup Nih Formatnya乂꧂:%0A%0A` +
+      `Nama: ${encodeURIComponent(namaEl.value.trim())}%0A` +
+      `ID Game: ${encodeURIComponent(idEl.value.trim())}%0A` +
+      `Game: ${encodeURIComponent(game)}%0A` +
+      `Produk: ${encodeURIComponent(produk)}%0A` +
+      `Harga: Rp ${encodeURIComponent(harga)}`;
+
+    location.href = `https://wa.me/${ADMIN_WA}?text=${msg}`;
+  });
+</script>
+</body>
+</html>

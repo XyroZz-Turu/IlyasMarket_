@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ilyas Market - Mobile Legends</title>
+<style>
+  :root{
+    --gold:#f5c542; --gold2:#ffdd70; --dark:#0b0b0d; --panel:#141416;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    background: radial-gradient(1200px 600px at 50% -10%, #26221b 0%, #0a0a0a 55%, #000 100%);
+    color:#fff; min-height:100vh; display:flex;
+  }
+  /* sidebar */
+  .sidebar{
+    width:240px; background:#111; border-right:2px solid var(--gold);
+    padding:20px; position:fixed; top:0; left:0; bottom:0; overflow-y:auto;
+    transform:translateX(-100%); transition:.3s;
+    z-index:1100;
+  }
+  .sidebar.open{transform:translateX(0);}
+  .sidebar h2{color:var(--gold);margin-bottom:18px;text-align:center;}
+  .sidebar a{
+    display:block; padding:10px 12px; margin:6px 0;
+    background:#1a1a1a; border-radius:10px; color:#fff; text-decoration:none;
+    transition:.2s;
+  }
+  .sidebar a:hover{background:var(--gold);color:#111;}
+  /* topbar */
+  .topbar{
+    height:60px; background:#141416; color:var(--gold);
+    display:flex; align-items:center; padding:0 16px;
+    position:fixed; left:0; right:0; top:0; z-index:1200;
+    border-bottom:1px solid var(--gold);
+  }
+  .menu-btn{font-size:1.4rem; cursor:pointer;margin-right:12px;}
+  /* content */
+  .content{
+    margin-left:0; padding:80px 20px 20px; flex:1; width:100%;
+  }
+  h2.section-title{
+    color:var(--gold);
+    margin:24px 0 12px;
+    border-left:4px solid var(--gold2);
+    padding-left:8px;
+  }
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px;}
+  .card{
+    background:#1a1a1a;
+    border:1px solid rgba(245,197,66,.3);
+    border-radius:14px;
+    padding:14px; text-align:center; transition:.2s; cursor:pointer;
+    position:relative;
+    overflow:hidden;
+  }
+  .card::before{
+    content:"♠ ♦ ♥ ♣";
+    position:absolute;
+    top:-20px; left:-20px; right:-20px; bottom:-20px;
+    font-size:50px;
+    color:rgba(255,255,255,0.05);
+    display:flex; align-items:center; justify-content:center;
+    transform:rotate(-25deg);
+    pointer-events:none;
+  }
+  .card:hover{transform:translateY(-3px); box-shadow:0 0 12px rgba(245,197,66,.4);}
+  .card h3{color:var(--gold2);font-size:1rem;margin-bottom:6px;position:relative;z-index:1;}
+  .card p{font-size:.9rem; color:#ccc;position:relative;z-index:1;}
+</style>
+</head>
+<body>
+
+<div class="sidebar" id="sidebar">
+  <a href="index.html">🏠 Beranda</a>
+  <a href="topsuperss.html">🎮 SuperSus</a>
+  <a href="topepep.html">🔫 Free Fire</a>
+  <a href="tophok.html">⭐ Honor Of Kings</a>
+  <a href="topbs.html">🔫 Blood Strike</a>
+  <a href="toppubg.html">🔫 PUBG Mobile</a>
+  <a href="akun.html">🔥 Akun Game</a>
+  <a href="jasa.html">⚡ Top Up Lain</a> 
+  <h2>☰ Menu</h2>
+</div>
+
+<div class="topbar">
+  <div class="menu-btn" onclick="toggleSidebar()">☰</div>
+  <div>Ilyas Market — Mobile Legends</div>
+</div>
+
+<div class="content">
+  <h2 class="section-title">💎 Diamond MLBB</h2>
+  <div class="cards" id="diamond-list"></div>
+
+  <h2 class="section-title">🎫 Membership MLBB</h2>
+  <div class="cards" id="membership-list"></div>
+</div>
+
+<script>
+  function toggleSidebar(){
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+
+  const diamonds = [
+    {nama:"5 Diamond", diamond:"5", harga:1000},
+    {nama:"12 Diamond", diamond:"12", harga:3000},
+    {nama:"19 Diamond", diamond:"19", harga:5000},
+    {nama:"28 Diamond", diamond:"28", harga:7000},
+    {nama:"36 Diamond", diamond:"36", harga:9000},
+    {nama:"59 Diamond", diamond:"59", harga:15000},
+    {nama:"85 Diamond", diamond:"85", harga:20000},
+    {nama:"170 Diamond", diamond:"170", harga:40000},
+    {nama:"240 Diamond", diamond:"240", harga:55000},
+    {nama:"296 Diamond", diamond:"296", harga:68000},
+    {nama:"408 Diamond", diamond:"408", harga:93000},
+    {nama:"568 Diamond", diamond:"568", harga:125000},
+    {nama:"875 Diamond", diamond:"875", harga:190000},
+    {nama:"2010 Diamond", diamond:"2010", harga:440000},
+    {nama:"4830 Diamond", diamond:"4830", harga:1050000}
+  ];
+
+  const memberships = [
+    {nama:"Weekly Diamond Pass", diamond:"Pass", harga:28750},
+    {nama:"Starlight Membership (300 Diamond)", diamond:"Membership", harga:80700},
+    {nama:"Starlight Membership Plus (750 Diamond)", diamond:"Membership Plus", harga:189800},
+    {nama:"Twilight Pass", diamond:"Pass", harga:147999},
+    {nama:"Starlight + 390 Diamonds", diamond:"Bundle", harga:179699},
+    {nama:"Starlight + 586 Diamonds", diamond:"Bundle", harga:227899},
+    {nama:"Starlight + 1411 Diamonds", diamond:"Bundle", harga:443800}
+  ];
+
+  function formatRupiah(angka){
+    return angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
+  function renderProduk(list, targetId){
+    const target = document.getElementById(targetId);
+    list.forEach(p=>{
+      let el=document.createElement('div');
+      el.className="card";
+      el.innerHTML=`<h3>${p.nama}</h3><p>Rp ${formatRupiah(p.harga)}</p>`;
+      el.onclick=()=>location.href=`checkout.html?game=Mobile%20Legends&produk=${encodeURIComponent(p.nama)}&diamond=${encodeURIComponent(p.diamond)}&harga=${p.harga}`;
+      target.appendChild(el);
+    });
+  }
+
+  renderProduk(diamonds, "diamond-list");
+  renderProduk(memberships, "membership-list");
+</script>
+
+</body>
+</html>

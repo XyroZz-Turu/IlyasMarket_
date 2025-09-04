@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ilyas Market - PUBG Mobile</title>
+<style>
+  :root{
+    --gold:#f5c542; --gold2:#ffdd70; --dark:#0b0b0d; --panel:#141416;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    background: radial-gradient(1200px 600px at 50% -10%, #26221b 0%, #0a0a0a 55%, #000 100%);
+    color:#fff; min-height:100vh; display:flex;
+  }
+  /* sidebar */
+  .sidebar{
+    width:240px; background:#111; border-right:2px solid var(--gold);
+    padding:20px; position:fixed; top:0; left:0; bottom:0; overflow-y:auto;
+    transform:translateX(-100%); transition:.3s;
+    z-index:1100;
+  }
+  .sidebar.open{transform:translateX(0);}
+  .sidebar h2{color:var(--gold);margin-bottom:18px;text-align:center;}
+  .sidebar a{
+    display:block; padding:10px 12px; margin:6px 0;
+    background:#1a1a1a; border-radius:10px; color:#fff; text-decoration:none;
+    transition:.2s;
+  }
+  .sidebar a:hover{background:var(--gold);color:#111;}
+  /* topbar */
+  .topbar{
+    height:60px; background:#141416; color:var(--gold);
+    display:flex; align-items:center; padding:0 16px;
+    position:fixed; left:0; right:0; top:0; z-index:1200;
+    border-bottom:1px solid var(--gold);
+  }
+  .menu-btn{font-size:1.4rem; cursor:pointer;margin-right:12px;}
+  /* content */
+  .content{
+    margin-left:0; padding:80px 20px 20px; flex:1; width:100%;
+  }
+  h2.section-title{
+    color:var(--gold);
+    margin:24px 0 12px;
+    border-left:4px solid var(--gold2);
+    padding-left:8px;
+  }
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px;}
+  .card{
+    background:#1a1a1a;
+    border:1px solid rgba(245,197,66,.3);
+    border-radius:14px;
+    padding:14px; text-align:center; transition:.2s; cursor:pointer;
+    position:relative;
+    overflow:hidden;
+  }
+  .card::before{
+    content:"♠ ♦ ♥ ♣";
+    position:absolute;
+    top:-20px; left:-20px; right:-20px; bottom:-20px;
+    font-size:50px;
+    color:rgba(255,255,255,0.05);
+    display:flex; align-items:center; justify-content:center;
+    transform:rotate(-25deg);
+    pointer-events:none;
+  }
+  .card:hover{transform:translateY(-3px); box-shadow:0 0 12px rgba(245,197,66,.4);}
+  .card h3{color:var(--gold2);font-size:1rem;margin-bottom:6px;position:relative;z-index:1;}
+  .card p{font-size:.9rem; color:#ccc;position:relative;z-index:1;}
+</style>
+</head>
+<body>
+
+<div class="sidebar" id="sidebar">
+  <h2>☰ Menu</h2>
+  <a href="index.html">🏠 Beranda</a>
+  <a href="topmlbb.html">🎮 Mobile Legends</a>
+  <a href="topepep.html">🔫 Free Fire</a>
+  <a href="topsuperss.html">⭐ SuperSus</a>
+  <a href="topbs.html">🔫 Blood Strike</a>
+  <a href="tophok.html">👑 Honor Of Kings</a>
+  <a href="akun.html">🔥 Akun Game</a>
+  <a href="jasa.html">⚡ Top Up Lain</a>
+</div>
+
+<div class="topbar">
+  <div class="menu-btn" onclick="toggleSidebar()">☰</div>
+  <div>Ilyas Market — PUBG Mobile</div>
+</div>
+
+<div class="content">
+  <h2 class="section-title">🔫 PUBG UC</h2>
+  <div class="cards" id="uc-list"></div>
+</div>
+
+<script>
+  function toggleSidebar(){
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+
+  const ucList = [
+    {nama:"30 UC", jumlah:"30", harga:8000},
+    {nama:"35 UC", jumlah:"35", harga:14000},
+    {nama:"50 UC", jumlah:"50", harga:15000},
+    {nama:"60 UC", jumlah:"60", harga:13000},
+    {nama:"70 UC", jumlah:"70", harga:15000},
+    {nama:"100 UC", jumlah:"100", harga:29000},
+    {nama:"120 UC", jumlah:"120", harga:29000},
+    {nama:"125 UC", jumlah:"125", harga:30000},
+    {nama:"150 UC", jumlah:"150", harga:37000},
+    {nama:"180 UC", jumlah:"180", harga:43000},
+    {nama:"210 UC", jumlah:"210", harga:53000},
+    {nama:"250 UC", jumlah:"250", harga:60000},
+    {nama:"300 UC", jumlah:"300", harga:72000},
+    {nama:"325 UC", jumlah:"325", harga:73000},
+    {nama:"350 UC", jumlah:"350", harga:80000},
+    {nama:"400 UC", jumlah:"400", harga:98000},
+    {nama:"600 UC", jumlah:"600", harga:119000},
+    {nama:"600 UC (Instan)", jumlah:"600", harga:143000},
+    {nama:"800 UC", jumlah:"800", harga:184000},
+    {nama:"1800 UC", jumlah:"1800", harga:360000},
+    {nama:"2000 UC", jumlah:"2000", harga:420000},
+    {nama:"2500 UC", jumlah:"2500", harga:522000}
+  ];
+
+  function formatRupiah(angka){
+    return angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
+  function renderProduk(list, targetId){
+    const target = document.getElementById(targetId);
+    list.forEach(p=>{
+      let el=document.createElement('div');
+      el.className="card";
+      el.innerHTML=`<h3>${p.nama}</h3><p>Rp ${formatRupiah(p.harga)}</p>`;
+      el.onclick=()=>location.href=`checkout.html?game=PUBG%20Mobile&produk=${encodeURIComponent(p.nama)}&jumlah=${encodeURIComponent(p.jumlah)}&harga=${p.harga}`;
+      target.appendChild(el);
+    });
+  }
+
+  renderProduk(ucList, "uc-list");
+</script>
+
+</body>
+</html>

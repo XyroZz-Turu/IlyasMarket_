@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ilyas Market - Akun Game</title>
+<style>
+  :root {
+    --gold:#f5c542;
+    --gold2:#ffdd70;
+    --dark:#0b0b0d;
+    --panel:#141416;
+  }
+  * {margin:0;padding:0;box-sizing:border-box;}
+  body {
+    font-family:"Trebuchet MS",Arial,sans-serif;
+    background:radial-gradient(1200px 600px at 50% -10%,#26221b 0%,#0a0a0a 55%,#000 100%);
+    color:#fff;
+    min-height:100vh;
+    display:flex;
+  }
+  /* sidebar */
+  .sidebar {
+    width:240px;
+    background:#111;
+    border-right:2px solid var(--gold);
+    padding:20px;
+    position:fixed;
+    top:0;left:0;bottom:0;
+    overflow-y:auto;
+    transform:translateX(-100%);
+    transition:.3s;
+    z-index:1100;
+  }
+  .sidebar.open {transform:translateX(0);}
+  .sidebar h2 {
+    color:var(--gold);
+    margin-bottom:40px;
+    text-align:center;
+    font-size:1.6rem;
+  }
+  .sidebar a {
+    display:block;
+    padding:10px 12px;
+    margin:12px 0;
+    background:#1a1a1a;
+    border-radius:10px;
+    color:#fff;
+    text-decoration:none;
+    transition:.2s;
+  }
+  .sidebar a:hover {
+    background:var(--gold);
+    color:#111;
+  }
+  /* topbar */
+  .topbar {
+    height:60px;
+    background:#141416;
+    color:var(--gold);
+    display:flex;
+    align-items:center;
+    padding:0 16px;
+    position:fixed;
+    left:0;right:0;top:0;
+    z-index:1200;
+    border-bottom:1px solid var(--gold);
+  }
+  .menu-btn {
+    font-size:1.4rem;
+    cursor:pointer;
+    margin-right:12px;
+  }
+  /* content */
+  .content {
+    margin-left:0;
+    padding:80px 20px 20px;
+    flex:1;
+    width:100%;
+    text-align:center;
+  }
+  .logo {
+    margin-top:40px;
+  }
+  .logo img {
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    border:3px solid var(--gold);
+    box-shadow:0 0 12px rgba(245,197,66,.5);
+  }
+  .section-title {
+    color:var(--gold);
+    margin:80px 0 12px; /* jarak sekitar 3 paragraf */
+    font-size:1.3rem;
+  }
+  .cards {
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+    gap:16px;
+    margin-top:20px;
+  }
+  .card {
+    background:#1a1a1a;
+    border:1px solid rgba(245,197,66,.3);
+    border-radius:14px;
+    padding:18px;
+    text-align:center;
+    transition:.2s;
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+  }
+  .card::before {
+    content:"🀄 🀆 🀙 🀚";
+    position:absolute;
+    top:-20px;left:-20px;right:-20px;bottom:-20px;
+    font-size:48px;
+    color:rgba(255,255,255,0.05);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transform:rotate(-15deg);
+    pointer-events:none;
+  }
+  .card:hover {
+    transform:translateY(-3px);
+    box-shadow:0 0 12px rgba(245,197,66,.4);
+  }
+  .card h3 {
+    color:var(--gold2);
+    font-size:1rem;
+    margin-bottom:6px;
+    position:relative;
+    z-index:1;
+  }
+  .card p {
+    font-size:.9rem;
+    color:#ccc;
+    position:relative;
+    z-index:1;
+  }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <h2>Ilyas Market</h2>
+  <a href="index.html">🏠 Beranda</a>
+  <a href="akun.html">🔥 Akun Game</a>
+  <a href="jasa.html">⚡ Top Up Lain</a>
+</div>
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="menu-btn" onclick="toggleSidebar()">☰</div>
+  <div>Ilyas Market — Akun Game</div>
+</div>
+
+<!-- Content -->
+<div class="content">
+  <!-- Logo -->
+  <div class="logo">
+    <img src="logo.jpg" alt="Logo Ilyas Market">
+  </div>
+
+  <!-- Judul & Cards -->
+  <h2 class="section-title">🔥 Saluran & Grup Akun Game</h2>
+  <div class="cards">
+    <div class="card" onclick="window.open('https://www.whatsapp.com/channel/0029VaxTiri2975Ky7seBx3g?fbclid=PAVERDUAMla_dleHRuA2FlbQIxMAABp2DH2RMn929W01wIh6qdAv3PrrTqQJjmSXw7BtnOCm1E-o_b2auzqo4Ru0W1_aem_YHkjJbZEChCW3alFJjWRaQ')">
+      <h3>📢 Ilyas Market Saluran</h3>
+      <p>Mengikuti saluran untuk melihat produk/stok akun game</p>
+    </div>
+    <div class="card" onclick="window.open('https://chat.whatsapp.com/JaheJAXZ8n03j1EORB9hoq?fbclid=PAVERDUAMlbD1leHRuA2FlbQIxMAABpz8nnbYkkFygt_b64fUMbKMiYFXFmWrk139_JtrwhOQMbG2v2lbyJmn9GaTI_aem_5OJj9XMzx71dLXipoXwTxg')">
+      <h3>💬 JB | Ilyas Store</h3>
+      <p>Gabung ke grup jb untuk memdapatkan info terbaru</p>
+    </div>
+    <div class="card" onclick="window.open('https://chat.whatsapp.com/Bv2i3Xk9vN5LpKFxNbNoEa?fbclid=PAVERDUAMlbGZleHRuA2FlbQIxMAABpwLGJ-TSkwVlre0yaaxdY_luN9NZyY_KN6Eo3ky6PDzjWdgutrxuz0rAJMtQ_aem_q72ZsmXZvB1kzEXywemsuA')">
+      <h3>💬 JB² | Ilyas Store</h3>
+      <p>Temukan teman mabar dan komunitas</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleSidebar(){
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+</script>
+
+</body>
+</html>

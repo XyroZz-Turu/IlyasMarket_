@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ilyas Market</title>
+  <meta name="description" content="Halaman utama Ilyas Market. Tema dark-gold elegan, sidebar transparan buka/tutup, responsif untuk mobile & desktop." />
+  <style>
+    /* ===== THEME ===== */
+    :root{
+      --bg:#0c0c0f;            
+      --panel:rgba(22,22,28,.72); 
+      --panel-solid:#15151b;   
+      --line:rgba(255,255,255,.10);
+      --text:#eef2ff;
+      --muted:#a6b0c3;
+      --gold:#ffd76a;          
+      --gold-2:#ffb300;        
+      --shadow:0 12px 30px rgba(0,0,0,.45);
+      --r:18px;
+      --sidebar-w:280px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--text);
+      background:
+        radial-gradient(900px 600px at 90% -10%, rgba(255,215,106,.12), transparent),
+        radial-gradient(900px 700px at -10% 120%, rgba(255,179,0,.08), transparent),
+        linear-gradient(180deg, #0b0b0e, #0e0e14 40%, #0b0b10 100%);
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+    a{color:inherit; text-decoration:none}
+
+    /* ===== HEADER ===== */
+    .header{
+      position:sticky; top:0; z-index:50;
+      background:rgba(12,12,15,.7); backdrop-filter:saturate(140%) blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+    .h-wrap{max-width:1200px; margin:0 auto; padding:12px 16px; display:flex; align-items:center; gap:12px}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.3px}
+    .brand img{width:34px; height:34px; border-radius:50%; object-fit:cover; box-shadow:0 0 8px rgba(255,215,106,.3);}
+    .brand span{color:var(--gold)}
+    .spacer{flex:1}
+    .wa-btn{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:12px;
+      background:linear-gradient(180deg,#1a1a24,#14141d); border:1px solid var(--line);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
+    }
+    .wa-btn:hover{box-shadow:0 0 0 2px rgba(255,215,106,.18) inset}
+    .menu-btn{display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:12px; border:1px solid var(--line);
+      background:linear-gradient(180deg,#1a1a24,#14141d); color:var(--gold); cursor:pointer}
+    .menu-btn:hover{box-shadow:0 0 0 2px rgba(255,215,106,.18) inset}
+
+    /* ===== LAYOUT WRAPPER ===== */
+    .page{display:flex; max-width:1200px; margin:14px auto; gap:16px; padding:0 16px}
+
+    /* ===== SIDEBAR ===== */
+    .sidebar{
+      width:var(--sidebar-w); flex:0 0 var(--sidebar-w);
+      height:calc(100dvh - 80px); position:sticky; top:80px;
+      border:1px solid var(--line); border-radius:var(--r);
+      background:var(--panel); backdrop-filter:blur(10px);
+      box-shadow:var(--shadow);
+      padding:20px 12px; display:flex; flex-direction:column; gap:8px;
+    }
+    .sidebar-brand {
+      text-align:center;
+      margin-bottom:30px;
+    }
+    .sidebar-logo {
+      width:70px;
+      height:70px;
+      border-radius:50%;
+      margin-bottom:12px;
+      object-fit:cover;
+      box-shadow:0 0 10px rgba(255,215,106,.4);
+    }
+    .sidebar h2 {
+      font-size:1.4rem;
+      color:var(--gold);
+      margin:0;
+    }
+    .sidebar nav {
+      margin-top:30px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .navlink{display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px; border:1px solid transparent}
+    .navlink:hover{border-color:rgba(255,215,106,.25); background:rgba(255,215,106,.06)}
+
+    /* ===== DRAWER ===== */
+    .drawer{position:fixed; inset:0; display:none; z-index:60}
+    .drawer.open{display:block}
+    .drawer .overlay{position:absolute; inset:0; background:rgba(0,0,0,.45)}
+    .drawer .panel{position:absolute; left:0; top:0; height:100%; width:min(86vw, 320px);
+      background:var(--panel-solid); border-right:1px solid var(--line); box-shadow:var(--shadow); padding:16px}
+    .drawer .panel .sidebar-brand {margin-bottom:20px;}
+
+    /* ===== MAIN CONTENT ===== */
+    .content{flex:1; min-width:0}
+    .hero{position:relative; border:1px solid var(--line); border-radius:var(--r);
+      background:linear-gradient(135deg, rgba(255,179,0,.12), rgba(255,215,106,.06));
+      box-shadow:var(--shadow); overflow:hidden}
+    .hero-in{padding:28px}
+    .hero h1{margin:0 0 6px; font-size:28px}
+    .hero p{margin:0; color:var(--muted)}
+
+    .grid{display:grid; grid-template-columns:repeat(12, 1fr); gap:14px; margin-top:16px}
+    @media (max-width: 1024px){ .grid{grid-template-columns:repeat(8, 1fr)} }
+    @media (max-width: 640px){ .grid{grid-template-columns:repeat(4, 1fr)} }
+
+    .card{grid-column:span 6; border:1px solid var(--line); border-radius:16px; background:rgba(255,255,255,.04);
+      padding:16px; transition:transform .2s ease, box-shadow .2s ease}
+    .card:hover{transform:translateY(-2px); box-shadow:0 0 0 2px rgba(255,215,106,.12) inset}
+    .card h3{margin:0 0 6px; color:var(--gold)}
+    .card p{margin:0; color:var(--muted)}
+
+    .steps{display:grid; grid-template-columns:repeat(12, 1fr); gap:14px; margin-top:10px}
+    .step{grid-column:span 4; border:1px dashed var(--line); border-radius:14px; padding:14px; background:rgba(255,255,255,.03)}
+    .step b{color:var(--gold)}
+
+    /* ===== FOOTER ===== */
+    footer{border-top:1px solid var(--line); margin-top:20px}
+    .foot{max-width:1200px; margin:0 auto; padding:18px 16px; color:var(--muted); font-size:13px}
+
+    /* ===== RESPONSIVE ===== */
+    @media (min-width: 992px){
+      .drawer{display:none !important}
+    }
+    @media (max-width: 991.98px){
+      .page{padding:0 12px}
+      .sidebar{display:none}
+      .brand{font-size:15px}
+      .hero-in{padding:22px}
+      .card{grid-column:span 12}
+      .step{grid-column:span 12}
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== HEADER ===== -->
+  <header class="header" aria-label="Kepala Halaman">
+    <div class="h-wrap">
+      <button class="menu-btn" id="openMenu" aria-label="Buka menu" aria-controls="drawer" aria-expanded="false">☰</button>
+      <div class="brand" aria-label="Ilyas Market">
+        <img src="logo.png" alt="Logo Ilyas Market">
+        <span>Ilyas Market</span>
+      </div>
+      <div class="spacer"></div>
+      <a class="wa-btn" id="waTop" href="#" target="_blank" rel="noopener" aria-label="Chat WhatsApp Admin">💬 Hubungi</a>
+    </div>
+  </header>
+
+  <!-- ===== PAGE WRAPPER ===== -->
+  <div class="page">
+    <!-- Sidebar -->
+    <aside class="sidebar" aria-label="Navigasi Samping">
+      <div class="sidebar-brand">
+        <img src="logo.png" alt="Logo" class="sidebar-logo">
+        <h2>Ilyas Market</h2>
+      </div>
+      <nav>
+        <a class="navlink" href="akun.html">📦 Akun Product</a>
+        <a class="navlink" href="jasa.html">🛠️ Topup Game</a>
+        <a class="navlink" href="#tentang">🏪 Tentang Store</a>
+      </nav>
+    </aside>
+
+    <!-- Drawer (mobile) -->
+    <div class="drawer" id="drawer" aria-hidden="true">
+      <div class="overlay" id="overlay" tabindex="-1" aria-label="Tutup menu"></div>
+      <nav class="panel" role="navigation" aria-label="Menu Seluler">
+        <div class="sidebar-brand">
+          <img src="logo.png" alt="Logo" class="sidebar-logo">
+          <h2>Ilyas Market</h2>
+        </div>
+        <a class="navlink" href="akun.html">📦 Akun Product</a>
+        <a class="navlink" href="jasa.html">🛠️ Jasa Top up</a>
+        <a class="navlink" href="#tentang" onclick="closeDrawer()">🏪 Tentang Store</a>
+        <div style="height:10px"></div>
+        <a class="navlink" id="waDrawer" href="#" target="_blank" rel="noopener">💬 Hubungi</a>
+      </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="content" id="main">
+      <section class="hero" id="tentang">
+        <div class="hero-in">
+          <h1>Selamat Datang di <span style="color:var(--gold)">Ilyas Market</span></h1>
+          <p>Katalog Akun & Topup dengan harga bersaing, pelayanan cepat, dan proses aman. Halaman ini adalah penjelasan toko — daftar produk & jasa tersedia di halaman terpisah.</p>
+        </div>
+      </section>
+
+      <div class="grid" style="margin-top:16px">
+        <article class="card">
+          <h3>Tentang Kami</h3>
+          <p>Kami fokus pada transaksi cepat dan transparan. Tim support siap membantu setiap hari pada jam operasional.</p>
+        </article>
+        <article class="card">
+          <h3>Keunggulan</h3>
+          <p>✅ Harga kompetitif • ✅ Respon cepat • ✅ Transaksi aman • ✅ Banyak metode pembayaran</p>
+        </article>
+      </div>
+
+      <section class="card" style="margin-top:16px">
+        <h3>Cara Beli Singkat</h3>
+        <div class="steps">
+          <div class="step"><b>1.</b> Buka <i>Akun Game</i> atau <i>Jasa Topup</i>.</div>
+          <div class="step"><b>2.</b> Pilih item → isi Nama (wajib) & ID (opsional).</div>
+          <div class="step"><b>3.</b> Checkout → otomatis chat WhatsApp admin.</div>
+        </div>
+      </section>
+
+      <section id="kontak" class="card" style="margin-top:16px">
+        <h3>Kontak</h3>
+        <p>WhatsApp Admin: <a id="waInline" href="#" target="_blank" rel="noopener" style="color:var(--gold)">Klik untuk chat</a></p>
+        <p>Tiktok <a href="https://www.tiktok.com/@yasmarketril?_t=ZS-8zGmYf458EL&_r=1" target="_blank" rel="noopener" style="color:var(--gold)">@Ilyas.Market</a></p>
+        <p>Instagram <a href="https://www.instagram.com/ilyasamarket?igsh=Y3Rhd3AwcnYzMHc4" target="_blank" rel="noopener" style="color:var(--gold)">@Ilyas.Market</a></p>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <div class="foot">© <span id="year"></span> Ilyas Market • All rights reserved.</div>
+  </footer>
+
+  <script>
+    const ADMIN_WA_NUMBER = '6283877492236';
+    const openBtn = document.getElementById('openMenu');
+    const drawer  = document.getElementById('drawer');
+    const overlay = document.getElementById('overlay');
+    const yearEl  = document.getElementById('year');
+
+    const waUrl = `https://wa.me/${ADMIN_WA_NUMBER}`;
+    document.getElementById('waTop').href    = waUrl;
+    document.getElementById('waInline').href = waUrl;
+    document.getElementById('waDrawer').href = waUrl;
+
+    yearEl.textContent = new Date().getFullYear();
+
+    function openDrawer(){
+      drawer.classList.add('open');
+      drawer.setAttribute('aria-hidden','false');
+      openBtn.setAttribute('aria-expanded','true');
+      document.body.style.overflow='hidden';
+    }
+    function closeDrawer(){
+      drawer.classList.remove('open');
+      drawer.setAttribute('aria-hidden','true');
+      openBtn.setAttribute('aria-expanded','false');
+      document.body.style.overflow='';
+    }
+
+    openBtn.addEventListener('click', ()=>{
+      if(drawer.classList.contains('open')) closeDrawer(); else openDrawer();
+    });
+    overlay.addEventListener('click', closeDrawer);
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeDrawer(); });
+
+    let lastIsDesktop = window.matchMedia('(min-width: 992px)').matches;
+    window.addEventListener('resize', ()=>{
+      const isDesktop = window.matchMedia('(min-width: 992px)').matches;
+      if(isDesktop !== lastIsDesktop){
+        closeDrawer();
+        lastIsDesktop = isDesktop;
+      }
+    });
+  </script>
+</body>
+</html>
